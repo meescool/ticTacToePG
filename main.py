@@ -4,7 +4,7 @@ This game is tic tac toe
 '''
 
 import sys, pygame
-from pygame.constants import MOUSEBUTTONDOWN
+from pygame.constants import MOUSEBUTTONDOWN, MOUSEMOTION
 import screens as s
 import assets as a
 import util as u
@@ -17,17 +17,20 @@ pygame.display.set_caption('Tic Tac Toe')
 
 running = True
 state = 0
+frame = 0
+mx = 0
+my = 0
 while running:
-
-    pygame.Surface.fill(scr,a.colors['indigo'])
-
-    state = s.screens(state,scr)
-    print(state , 'this is a state')
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
         if event.type == MOUSEBUTTONDOWN:
+            mx,my = pygame.mouse.get_pos()
             if state == 0:
                 state += 1
+    pygame.Surface.fill(scr,a.colors['indigo'])
 
+    state = s.screens(state,scr,frame,0,0)
+        
+    frame+=1
     pygame.display.update()
 

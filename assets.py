@@ -15,12 +15,14 @@ sizes={
 }
 
 fonts={
-    'btn': pygame.font.SysFont(None,30),
-    'sub': pygame.font.SysFont(None,30)
+    'btn': pygame.font.SysFont('Corbel',30),
+    'sub': pygame.font.SysFont('Corbel',30)
 }
 
 img={
-    'title':pygame.image.load('images/title.png')
+    'title':pygame.image.load('images/title.png'),
+    'bg':pygame.image.load('images/bg.png')
+
 }
 
 # buttons = {
