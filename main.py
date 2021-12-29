@@ -21,7 +21,9 @@ subState = 0
 blinker = 0
 mx = 0
 my = 0
-player={'skin':0,'turn':True}
+skins = [a.img['o'],a.img['x']]
+player={'skin':skins,'turn':True}
+plays = [1,0,1,0,1,1,2,1,2]
 
 while running:
     for event in pygame.event.get():
@@ -33,7 +35,7 @@ while running:
                 mx,my = pygame.mouse.get_pos()
     pygame.Surface.fill(scr,a.colors['indigo'])
 
-    state = s.screens(state,scr,blinker,mx,my,player)
+    state = s.screens(state,scr,blinker,mx,my,player,plays,subState)
     if blinker == 100:
         blinker = 0
     blinker+=1

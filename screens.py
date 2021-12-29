@@ -6,7 +6,7 @@ import util as u
 import buttons as b
 from pygame import rect
 
-def screens(state,scr,bl,mx,my,player):
+def screens(state,scr,bl,mx,my,player,plays,subState):
     if(state==0):
         start_screen(scr,bl)
         return state
@@ -19,12 +19,10 @@ def screens(state,scr,bl,mx,my,player):
         if option == 'help':
             state = 4
         if option == 'quit':
-            print('quit')
             sys.exit()
         return state
     elif(state==2):
-        print('state2')
-        game_screen(scr,player,bl,mx,my)
+        state, plays, player =game_screen(scr,player,plays,bl,mx,my,state,subState)
         return state
     else:
         return state
@@ -70,15 +68,24 @@ def main_menu_screen(scr,mx,my,bl):
         if(btn.click(mx,my))==True:
             return btn.text
     return ""
-def game_screen(scr,player,bl,mx,my):
-    u.draw_grid(scr)
+def game_screen(scr,player,plays,bl,mx,my,state,subState):
+    temp = ''
+    u.draw_grid(scr,plays,player)
     menu_button = u.draw_menu_btn(scr)
     if menu_button.click(mx,my) == True:
-        u.draw_menu(scr,bl)
-    
+        subState = 1
+        temp = u.draw_menu(scr,bl,mx,my)
+    else: subState = 0
+    if temp == 'restart' and subState == 1:
+        plays = [0,0,0,0,0,0,0,0,0]
+        state = 2
+    if temp == 'quit' and subState == 1:
+        sys.exit()
+    return state,plays,player
     # make a button and change the substate
     # u.draw_menu(scr,bl)
-    u.draw_players(scr,player)
+
+    return state
 
     
     # if grid == True:
