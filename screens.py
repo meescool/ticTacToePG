@@ -6,27 +6,32 @@ import util as u
 import buttons as b
 from pygame import rect
 
-def screens(state,scr,fr,mx,my):
-        if(state==0):
-            start_screen(scr,fr)
-            return state
-        elif(state==1):
-          
-            option = main_menu_screen(scr,mx,my)
-            if option == 'start' and state == 1:
-                state = 2
-            if option == 'skins':
-                state = 3
-            if option == 'help':
-                state = 4
-            if option == 'quit':
-                sys.exit()
-            return state
-        else:
-            print(state)
-            return state
+def screens(state,scr,bl,mx,my):
+    player={'skin':0,'wins':0,}
 
-def start_screen(scr,fr):
+    if(state==0):
+        start_screen(scr,bl)
+        return state
+    elif(state==1):
+        option=main_menu_screen(scr,mx,my,bl)
+        if option == 'start' and state == 1:
+            state = 2
+        if option == 'skins':
+            state = 3
+        if option == 'help':
+            state = 4
+        if option == 'quit':
+            print('quit')
+            sys.exit()
+        return state
+    elif(state==2):
+        print('state2')
+        game_screen(scr,player,bl)
+        return state
+    else:
+        return state
+
+def start_screen(scr,bl):
     scr.blit(a.img['title'],(0,0)) 
 
     # surface,
@@ -34,11 +39,13 @@ def start_screen(scr,fr):
     y= a.sizes['scr'][1] - 30
     text = 'click to continue'
 
-    u.write_text(scr,text,a.fonts['sub'],a.colors['white'],x,y)
+    if bl >= 50:
+        u.write_text(scr,text,a.fonts['sub'],a.colors['white'],x,y)
+    
 
     return
 
-def main_menu_screen(scr,mx,my):
+def main_menu_screen(scr,mx,my,bl):
     scr.blit(a.img['bg'],(0,0)) 
 
     w = a.sizes['scr'][0]/2 - 50
@@ -59,13 +66,20 @@ def main_menu_screen(scr,mx,my):
     btns = [start,skins,help,quit]
     for btn in btns:
         btn.draw(scr)
-        btn.hover(scr)
+        btn.hover(scr,bl)
     
     for btn in btns:
         if(btn.click(mx,my))==True:
             return btn.text
-    return " "
-                
+    return ""
+def game_screen(scr,player,bl):
+
+    print('game')
+    u.draw_grid(scr) 
+    # if grid == True:
+    #     playerTurn()   
+    #     cpuTurn()   
+      
             
         
 

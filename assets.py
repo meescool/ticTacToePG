@@ -21,7 +21,8 @@ fonts={
 
 img={
     'title':pygame.image.load('images/title.png'),
-    'bg':pygame.image.load('images/bg.png')
+    'bg':pygame.image.load('images/bg.png'),
+    'grid':pygame.image.load('images/grid.png')
 
 }
 

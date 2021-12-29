@@ -18,11 +18,14 @@ class Button():
         pygame.draw.rect(scr,self.colors[0],self.box,self.width,self.corners[0],self.corners[1],self.corners[2],self.corners[3])
         u.write_text(scr,self.text,a.fonts['btn'],self.colors[1],self.x+(self.w/2),self.y+(self.h/2))
 
-    def hover(self,scr):
+    def hover(self,scr,fr):
         x,y = pygame.mouse.get_pos()
         if x >= self.x and x <= self.x +self.w and y >= self.y and y <= self.y + self.h:
             pygame.draw.rect(scr,self.colors[2],self.box,self.width,self.corners[0],self.corners[1],self.corners[2],self.corners[3])
-            u.write_text(scr,self.text,a.fonts['btn'],self.colors[1],self.x+(self.w/2),self.y+(self.h/2))
+            if fr <= 50:
+                u.write_text(scr,self.text,a.fonts['btn'],self.colors[1],self.x+(self.w/2),self.y+(self.h/2))
+            else:  
+                u.write_text(scr,self.text,a.fonts['btn'],self.colors[0],self.x+(self.w/2),self.y+(self.h/2))
 
     def click(self,x,y): 
         if x >= self.x and x <= self.x +self.w and y >= self.y and y <= self.y + self.h: 
