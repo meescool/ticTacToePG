@@ -17,9 +17,12 @@ pygame.display.set_caption('Tic Tac Toe')
 
 running = True
 state = 0
+subState = 0
 blinker = 0
 mx = 0
 my = 0
+player={'skin':0,'turn':True}
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
@@ -30,7 +33,7 @@ while running:
                 mx,my = pygame.mouse.get_pos()
     pygame.Surface.fill(scr,a.colors['indigo'])
 
-    state = s.screens(state,scr,blinker,mx,my)
+    state = s.screens(state,scr,blinker,mx,my,player)
     if blinker == 100:
         blinker = 0
     blinker+=1

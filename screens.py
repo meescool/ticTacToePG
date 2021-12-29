@@ -6,9 +6,7 @@ import util as u
 import buttons as b
 from pygame import rect
 
-def screens(state,scr,bl,mx,my):
-    player={'skin':0,'wins':0,}
-
+def screens(state,scr,bl,mx,my,player):
     if(state==0):
         start_screen(scr,bl)
         return state
@@ -26,7 +24,7 @@ def screens(state,scr,bl,mx,my):
         return state
     elif(state==2):
         print('state2')
-        game_screen(scr,player,bl)
+        game_screen(scr,player,bl,mx,my)
         return state
     else:
         return state
@@ -53,7 +51,7 @@ def main_menu_screen(scr,mx,my,bl):
     x = a.sizes['scr'][0]/2 - ((a.sizes['scr'][0]/2 - 50)/2)
     y = (a.sizes['scr'][1]/2)- (h*4/2)
   
-    colors = [a.colors['white'],a.colors['black'],a.colors['l-pink']]
+    colors = [a.colors['white'],a.colors['black'],a.colors['white'],a.colors['pink']]
     
     start = b.Button(colors,x,y,w,h,'start',0,[0,30,30,0])
    
@@ -72,10 +70,17 @@ def main_menu_screen(scr,mx,my,bl):
         if(btn.click(mx,my))==True:
             return btn.text
     return ""
-def game_screen(scr,player,bl):
+def game_screen(scr,player,bl,mx,my):
+    u.draw_grid(scr)
+    menu_button = u.draw_menu_btn(scr)
+    if menu_button.click(mx,my) == True:
+        u.draw_menu(scr,bl)
+    
+    # make a button and change the substate
+    # u.draw_menu(scr,bl)
+    u.draw_players(scr,player)
 
-    print('game')
-    u.draw_grid(scr) 
+    
     # if grid == True:
     #     playerTurn()   
     #     cpuTurn()   
