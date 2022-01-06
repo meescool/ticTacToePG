@@ -6,10 +6,10 @@ import util as u
 import buttons as b
 from pygame import rect
 
-def screens(state,scr,bl,mx,my,player,plays,subState):
+def screens(state,scr,bl,timer,mx,my,mx2,my2,player,plays,subState):
     if(state==0):
         start_screen(scr,bl)
-        return state
+        return state, 0, timer
     elif(state==1):
         option=main_menu_screen(scr,mx,my,bl)
         if option == 'start' and state == 1:
@@ -20,12 +20,12 @@ def screens(state,scr,bl,mx,my,player,plays,subState):
             state = 4
         if option == 'quit':
             sys.exit()
-        return state
+        return state, 0, timer
     elif(state==2):
-        state, plays, player =game_screen(scr,player,plays,bl,mx,my,state,subState)
-        return state
+        state, subState, timer, plays, player =game_screen(scr,player,plays,bl,timer,mx,my,mx2,my2,state,subState)
+        return state, subState, timer
     else:
-        return state
+        return state, 0, timer
 
 def start_screen(scr,bl):
     scr.blit(a.img['title'],(0,0)) 
@@ -68,24 +68,34 @@ def main_menu_screen(scr,mx,my,bl):
         if(btn.click(mx,my))==True:
             return btn.text
     return ""
-def game_screen(scr,player,plays,bl,mx,my,state,subState):
+
+'''
+' This is function sets up the game screem.
+' It first draws the grid, using the plays and player 
+' to decide what to draw.
+' Then it also draws a menu button. There is a checker to
+' see if the menu button is being clicked.
+'''
+def game_screen(scr,player,plays,bl,timer,mx,my,mx2,my2,state,subState):
     temp = ''
     u.draw_grid(scr,plays,player)
     menu_button = u.draw_menu_btn(scr)
     if menu_button.click(mx,my) == True:
-        subState = 1
-        temp = u.draw_menu(scr,bl,mx,my)
-    else: subState = 0
-    if temp == 'restart' and subState == 1:
+        temp = u.draw_menu(scr,bl,mx2,my2)
+        if subState != 2:
+            subState = 1
+    print(temp)
+    print(subState)
+    if temp == 'restart':
         plays = [0,0,0,0,0,0,0,0,0]
         state = 2
-    if temp == 'quit' and subState == 1:
+        subState = 0
+    if temp == 'quit' and subState == 2:
         sys.exit()
-    return state,plays,player
+    return state, subState, timer,plays,player
     # make a button and change the substate
     # u.draw_menu(scr,bl)
 
-    return state
 
     
     # if grid == True:

@@ -79,7 +79,10 @@ def draw_menu(scr,bl,mx,my):
         btn.hover(scr,bl)
     
     for btn in btns:
-        print(btn.text)
         if(btn.click(mx,my))==True:
             return btn.text
     return 1
+
+def timer(timer):
+    timer-=1
+    return timer
