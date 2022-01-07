@@ -20,13 +20,18 @@ def get_size(thing):
     h = thing.get_height()
     return w,h
 
+def check_input(mx,my):
+    print('check input')
+
 def draw_grid(scr, plays,player):
     pygame.Surface.fill(scr,a.colors['indigo'])
     # a.img['grid'].set_alpha(0)
     w,h = get_size(a.img['grid'])
+    # place the grid
     grid = scr.blit(a.img['grid'],((a.sizes['scr'][0] - w)/2,(a.sizes['scr'][0] - h)/2))
     x = (a.sizes['scr'][0] - w)/2
     y = ((a.sizes['scr'][0] - h)/2)+20
+
     i = 0
     for play in plays:
         # adjusting how to display figures
@@ -55,7 +60,7 @@ def draw_menu_btn(scr):
     return btn
 
 
-def draw_menu(scr,bl,mx,my):
+def draw_menu(scr,bl,coord):
     area = pygame.Rect(0,a.sizes['scr'][0]/2,(a.sizes['scr'][0]/3)*(2),a.sizes['scr'][0]/2)
     bg = pygame.draw.rect(scr,a.colors['white'],area,0,0,0,50,0,0)
     w = a.sizes['scr'][0]/2 - 50
@@ -79,7 +84,7 @@ def draw_menu(scr,bl,mx,my):
         btn.hover(scr,bl)
     
     for btn in btns:
-        if(btn.click(mx,my))==True:
+        if(btn.click(coord['mx2'],coord['my2']))==True:
             return btn.text
     return 1
 

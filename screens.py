@@ -6,12 +6,12 @@ import util as u
 import buttons as b
 from pygame import rect
 
-def screens(state,scr,bl,timer,mx,my,mx2,my2,player,plays,subState):
+def screens(state,scr,bl,timer,coord,player,plays,subState):
     if(state==0):
         start_screen(scr,bl)
-        return state, 0, timer
+        return state, 0, timer, player, plays, coord
     elif(state==1):
-        option=main_menu_screen(scr,mx,my,bl)
+        option=main_menu_screen(scr,coord['mx'],coord['my'],bl)
         if option == 'start' and state == 1:
             state = 2
         if option == 'skins':
@@ -20,12 +20,12 @@ def screens(state,scr,bl,timer,mx,my,mx2,my2,player,plays,subState):
             state = 4
         if option == 'quit':
             sys.exit()
-        return state, 0, timer
+        return state, 0, timer, player, plays,coord
     elif(state==2):
-        state, subState, timer, plays, player =game_screen(scr,player,plays,bl,timer,mx,my,mx2,my2,state,subState)
-        return state, subState, timer
+        state, subState, timer, player, plays, coord =game_screen(scr,player,plays,bl,timer,coord,state,subState)
+        return state, subState, timer, player, plays, coord
     else:
-        return state, 0, timer
+        return state, 0, timer, player, plays, coord
 
 def start_screen(scr,bl):
     scr.blit(a.img['title'],(0,0)) 
@@ -76,12 +76,13 @@ def main_menu_screen(scr,mx,my,bl):
 ' Then it also draws a menu button. There is a checker to
 ' see if the menu button is being clicked.
 '''
-def game_screen(scr,player,plays,bl,timer,mx,my,mx2,my2,state,subState):
+def game_screen(scr,player,plays,bl,timer,coord,state,subState):
     temp = ''
     u.draw_grid(scr,plays,player)
     menu_button = u.draw_menu_btn(scr)
-    if menu_button.click(mx,my) == True:
-        temp = u.draw_menu(scr,bl,mx2,my2)
+    if menu_button.click(coord['mx'],coord['my']) == True:
+        temp = u.draw_menu(scr,bl,coord)
+        coord['mx2'] =0
         if subState != 2:
             subState = 1
     print(temp)
@@ -90,9 +91,15 @@ def game_screen(scr,player,plays,bl,timer,mx,my,mx2,my2,state,subState):
         plays = [0,0,0,0,0,0,0,0,0]
         state = 2
         subState = 0
+        coord['mx'] = 0
+        coord['my'] = 0
+        temp = ''
+        return state, subState, timer, player, plays,coord
+
+        
     if temp == 'quit' and subState == 2:
         sys.exit()
-    return state, subState, timer,plays,player
+    return state, subState, timer, player, plays, coord
     # make a button and change the substate
     # u.draw_menu(scr,bl)
 

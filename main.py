@@ -17,11 +17,18 @@ pygame.display.set_caption('Tic Tac Toe')
 
 running = True
 
+
 state = 0
 subState = 0 # might need this
 blinker = 0 # need this for blinking effect
 timer = 10 # a counter for setting pauses in between button touches
 
+coord ={
+    'mx':0,
+    'my':0,
+    'mx2':0,
+    'my2':0
+}
 mx = 0 # stores the mouse x position
 my = 0 # stores the mouse y position
 
@@ -37,6 +44,7 @@ player={'skin':skins,'turn':True} # set the players skins and whether it's it's 
 # 2 = cpu
 plays = [1,0,1,0,1,1,2,1,2] 
 
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
@@ -46,15 +54,15 @@ while running:
                 state += 1
             # when clicking on the submenu in the game screen
             elif state == 2 and subState == 1:
-                mx2,my2 = pygame.mouse.get_pos()
+                coord['mx2'],coord['my2'] = pygame.mouse.get_pos()
                 subState = 2
             # when clicking on other screens
             elif state != 0:
-                mx,my = pygame.mouse.get_pos()
+                coord['mx'],coord['my']= pygame.mouse.get_pos()
                 
     pygame.Surface.fill(scr,a.colors['indigo'])
 
-    state, subState, timer = s.screens(state,scr,blinker,timer,mx,my,mx2,my2,player,plays,subState)
+    state, subState, timer, player, plays,coord = s.screens(state,scr,blinker,timer,coord,player,plays,subState)
     if blinker == 100:
         blinker = 0
     blinker+=1
