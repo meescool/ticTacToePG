@@ -7,6 +7,17 @@ import buttons as b
 from pygame import rect
 
 def screens(state,scr,bl,timer,coord,player,plays,subState):
+    '''
+    ' This function has a switch that returns all the possible screens
+    ' state - the state to keep track of what screen was last on
+    ' scr - the window
+    ' bl - this keeps count for when to blink
+    ' timer - keeping track of time
+    ' coord - coordinates of the mouse click
+    ' player - player information 
+    ' plays - keeps track of board
+    ' substate - used for the state any menu in a screen is in
+    '''
     if(state==0):
         start_screen(scr,bl)
         return state, 0, timer, player, plays, coord
@@ -69,17 +80,20 @@ def main_menu_screen(scr,mx,my,bl):
             return btn.text
     return ""
 
-'''
-' This is function sets up the game screem.
-' It first draws the grid, using the plays and player 
-' to decide what to draw.
-' Then it also draws a menu button. There is a checker to
-' see if the menu button is being clicked.
-'''
+
 def game_screen(scr,player,plays,bl,timer,coord,state,subState):
+    '''
+    ' This function sets up the game screem.
+    ' It first draws the grid, using the plays and player 
+    ' to decide what to draw.
+    ' Then it also draws a menu button. There is a checker to
+    ' see if the menu button is being clicked.
+    '''
+    # stores the menu selection 
     temp = ''
     u.draw_grid(scr,plays,player)
     menu_button = u.draw_menu_btn(scr)
+    
     if menu_button.click(coord['mx'],coord['my']) == True:
         temp = u.draw_menu(scr,bl,coord)
         coord['mx2'] =0
@@ -99,6 +113,12 @@ def game_screen(scr,player,plays,bl,timer,coord,state,subState):
         
     if temp == 'quit' and subState == 2:
         sys.exit()
+    # if 
+    if temp == '':
+        x,y = u.get_size(a.img['grid'])
+        if x > coord['mx']:
+            plays, player = u.play_grid(plays, player, coord['mx'], coord['my'])
+            print('clicked on grid')
     return state, subState, timer, player, plays, coord
     # make a button and change the substate
     # u.draw_menu(scr,bl)

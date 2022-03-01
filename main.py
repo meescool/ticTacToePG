@@ -42,7 +42,7 @@ player={'skin':skins,'turn':True} # set the players skins and whether it's it's 
 # 0 = empty
 # 1 = player
 # 2 = cpu
-plays = [1,0,1,0,1,1,2,1,2] 
+plays = [0,0,0,0,0,0,2,1,2] 
 
 
 while running:

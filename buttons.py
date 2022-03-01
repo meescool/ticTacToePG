@@ -3,6 +3,9 @@ import util as u
 import assets as a
 
 class Button():
+    '''
+    My button class
+    '''
     def __init__(self, colors, x,y,w,h,text,width,corners):
         self.colors= colors
         self.x=x
