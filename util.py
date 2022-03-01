@@ -1,4 +1,5 @@
 #write text
+import random
 import pygame
 from pygame import color
 import assets as a
@@ -23,8 +24,12 @@ def get_size(thing):
 def check_input(mx,my):
     print('check input')
 
+def get_rand(limit):
+    rand = random.randrange(0,limit)
+    return rand
+
 def play_grid(plays, player, mx, my):
-    print('put play on game')
+    # print('put play on game')
     '''
     ' if player = true
     ' check where the user clicks
@@ -35,23 +40,53 @@ def play_grid(plays, player, mx, my):
     ' once timer is reached then place the play of the computer 
     ' set player to true
     '''
+    w,h = get_size(a.img['grid'])
+    padx = (a.sizes['scr'][0] - w)/2
+    pady = (a.sizes['scr'][0] - h)/2
+    x = w/3
+    y = h/3
+    i = 0
+    j = 0
+    k = 0
     if(player['turn'] == True):
         for play in plays:
-            if(plays[play] == 0 and player['turn'] == True):
-                if(mx < 100):
-                    print('player played their turn')
-                    plays[play] = 1
+            if(player['turn'] == True):                            
+                if ((mx > (x*i) + padx and mx < ((x * i) + x) + padx) and (my > (y*j) + pady and my < ((y * j) + y) + pady) and play == 0):
+                    print("This is the value of col 1 ", (y*j) + pady)
+                    print("This is the value of end col 1  ", ((y * j) + y) + pady)
+                    print("This is the value of my mouse y ", my)
+                    print('player played their turn on spot ', k)
+                    plays[k] = 1
                     player['turn'] = False
+                    mx = 0
+                    my = 0
+            i+=1    
+            if(i == 3):
+                i = 0
+                j += 1             
+            k+=1
                     # need to check where the user clicked and then reset the mx and my coordinates
     # need to check if there is a winner
     else:
-        plays[4] = 2
+        play = get_rand(8)
+        limiter = 0
+        while(True):
+            print("CPU turn to play is playing spot ", play)
+            if(plays[play] == 0):
+                plays[play] = 2
+                player['turn'] = True
+                break
+            else:
+                play = get_rand(9)
+            if (limiter == 9):
+                break
+            limiter+=1
+
         #player['turn'] = True
         # need to add a random function for choosing the pc move
         # need to add a timing function to simulate time
     # need to check if there is a winner
-
-    return plays, player
+    return plays, player, mx, my
 
 
 def draw_grid(scr, plays,player):

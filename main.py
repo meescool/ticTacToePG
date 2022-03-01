@@ -42,7 +42,7 @@ player={'skin':skins,'turn':True} # set the players skins and whether it's it's 
 # 0 = empty
 # 1 = player
 # 2 = cpu
-plays = [0,0,0,0,0,0,2,1,2] 
+plays = [0,0,0,0,0,0,0,0,0] 
 
 
 while running:
@@ -55,7 +55,7 @@ while running:
             # when clicking on the submenu in the game screen
             elif state == 2 and subState == 1:
                 coord['mx2'],coord['my2'] = pygame.mouse.get_pos()
-                subState = 2
+                subState = -1
             # when clicking on other screens
             elif state != 0:
                 coord['mx'],coord['my']= pygame.mouse.get_pos()

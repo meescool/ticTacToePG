@@ -24,7 +24,10 @@ def screens(state,scr,bl,timer,coord,player,plays,subState):
     elif(state==1):
         option=main_menu_screen(scr,coord['mx'],coord['my'],bl)
         if option == 'start' and state == 1:
+            coord['mx'] = 0 
+            coord['my'] = 0
             state = 2
+
         if option == 'skins':
             state = 3
         if option == 'help':
@@ -35,6 +38,10 @@ def screens(state,scr,bl,timer,coord,player,plays,subState):
     elif(state==2):
         state, subState, timer, player, plays, coord =game_screen(scr,player,plays,bl,timer,coord,state,subState)
         return state, subState, timer, player, plays, coord
+    elif(state==3):
+        print("skins")
+    elif(state==4):
+        print("help")
     else:
         return state, 0, timer, player, plays, coord
 
@@ -97,10 +104,10 @@ def game_screen(scr,player,plays,bl,timer,coord,state,subState):
     if menu_button.click(coord['mx'],coord['my']) == True:
         temp = u.draw_menu(scr,bl,coord)
         coord['mx2'] =0
-        if subState != 2:
+        if subState != -1:
             subState = 1
-    print(temp)
-    print(subState)
+    # print(temp)
+    # print(subState)
     if temp == 'restart':
         plays = [0,0,0,0,0,0,0,0,0]
         state = 2
@@ -111,14 +118,21 @@ def game_screen(scr,player,plays,bl,timer,coord,state,subState):
         return state, subState, timer, player, plays,coord
 
         
-    if temp == 'quit' and subState == 2:
+    if temp == 'quit' and subState == -1:
         sys.exit()
     # if 
     if temp == '':
-        x,y = u.get_size(a.img['grid'])
-        if x > coord['mx']:
-            plays, player = u.play_grid(plays, player, coord['mx'], coord['my'])
-            print('clicked on grid')
+        w,h = u.get_size(a.img['grid'])
+        padx = (a.sizes['scr'][0] - w)/2
+        pady = (a.sizes['scr'][0] - h)/2
+        print(coord['my'] , " is < ", h + pady)
+        # player checks that mouse coordinates are in the grid, taking into account the padding of the window
+        if (coord['mx'] > padx and coord['mx'] < w+padx) and (coord['my'] > pady and coord['my'] < h + pady):
+            plays, player, coord['mx'], coord['my'] = u.play_grid(plays, player, coord['mx'], coord['my'])
+        # cpu checks that if it's cpu turn
+        elif (player['turn'] == False and (coord['mx'] == 0 and coord['my'] == 0)):
+            plays, player, coord['mx'], coord['my'] = u.play_grid(plays, player, coord['mx'], coord['my'])
+        # print('clicked on grid')
     return state, subState, timer, player, plays, coord
     # make a button and change the substate
     # u.draw_menu(scr,bl)
