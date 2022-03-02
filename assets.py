@@ -16,7 +16,10 @@ sizes={
 
 fonts={
     'btn': pygame.font.SysFont('Corbel',30),
-    'sub': pygame.font.SysFont('Corbel',30)
+    'sub': pygame.font.SysFont('Corbel',30),
+    'score': pygame.font.SysFont('Corbel',60),
+    'text': pygame.font.SysFont('Corbel',25),
+
 }
 
 img={

@@ -21,14 +21,43 @@ def get_size(thing):
     h = thing.get_height()
     return w,h
 
-def check_input(mx,my):
-    print('check input')
+def check_winner(plays, sym):
+    '''
+    ' This function checks for the winner. I decided to use a hashing algorithm to check for the winners
+    ' Basically it goes through the list of plots on the grid and checks if there is a 1 or 2, depending
+    ' on where the function was called, and adds one to a list that keeps track of the rows and columns
+    ' kind of like in a matrix.
+    ' !! important !! currently does not check for diagonals
+    '''
+    row = [0,0,0]
+    col = [0,0,0]
+    dia = [0,0]
+    i = 0
+    j = 0
+    k = 0
+    for play in plays:
+        # print(play)
+        if(play == sym):
+            col[i] += 1
+            row[j] += 1
+            
+        i+=1
+        if(i == 3):
+            j+=1
+            i=0
+    # print("")
+    # print(row[0])
+    if ((row[0] == 3 or row[1] == 3 or row[2] == 3) or (col[0] == 3 or col[1] == 3 or col[2] == 3)):
+        return True
+
+    return False
+
 
 def get_rand(limit):
     rand = random.randrange(0,limit)
     return rand
 
-def play_grid(plays, player, mx, my):
+def play_grid(plays, player, mx, my, state, time):
     # print('put play on game')
     '''
     ' if player = true
@@ -52,10 +81,10 @@ def play_grid(plays, player, mx, my):
         for play in plays:
             if(player['turn'] == True):                            
                 if ((mx > (x*i) + padx and mx < ((x * i) + x) + padx) and (my > (y*j) + pady and my < ((y * j) + y) + pady) and play == 0):
-                    print("This is the value of col 1 ", (y*j) + pady)
-                    print("This is the value of end col 1  ", ((y * j) + y) + pady)
-                    print("This is the value of my mouse y ", my)
-                    print('player played their turn on spot ', k)
+                    # print("This is the value of col 1 ", (y*j) + pady)
+                    # print("This is the value of end col 1  ", ((y * j) + y) + pady)
+                    # print("This is the value of my mouse y ", my)
+                    # print('player played their turn on spot ', k)
                     plays[k] = 1
                     player['turn'] = False
                     mx = 0
@@ -66,27 +95,54 @@ def play_grid(plays, player, mx, my):
                 j += 1             
             k+=1
                     # need to check where the user clicked and then reset the mx and my coordinates
-    # need to check if there is a winner
+        # need to check if there is a winner
+        if(check_winner(plays, 1)== True):
+            player['turn'] = True
+            player['status'] = 1
+            plays = [0,0,0,0,0,0,0,0,0]
+            state = 5
+            return plays, player, mx, my, state, time
     else:
-        play = get_rand(8)
-        limiter = 0
-        while(True):
-            print("CPU turn to play is playing spot ", play)
-            if(plays[play] == 0):
-                plays[play] = 2
-                player['turn'] = True
-                break
-            else:
-                play = get_rand(9)
-            if (limiter == 9):
-                break
-            limiter+=1
+        time+=1
+        if(time >= 300):
+            play = get_rand(8)
+            limiter = 0
+            while(True):
+                # print("CPU turn to play is playing spot ", play)
+                if(plays[play] == 0):
+                    mx = 0
+                    my = 0
+                    time = 0
+                    plays[play] = 2
+                    player['turn'] = True
+                    break
+                else:
+                    play = get_rand(9)
+                if (limiter == 9):
+                    break
+                limiter+=1
 
+            if(check_winner(plays, 2)== True):
+                player['turn'] = False
+                player['status'] = 2
+                plays = [0,0,0,0,0,0,0,0,0]
+                state = 5
+                return plays, player, mx, my, state, time
+
+            playsSet = set(plays)
+            if 0 not in playsSet:
+                player['turn'] = True
+                player['status'] = 0
+                plays = [0,0,0,0,0,0,0,0,0]
+                state = 5
+                return plays, player, mx, my, state, time
+
+        
         #player['turn'] = True
         # need to add a random function for choosing the pc move
         # need to add a timing function to simulate time
-    # need to check if there is a winner
-    return plays, player, mx, my
+        # need to check if there is a winner
+    return plays, player, mx, my, state, time
 
 
 def draw_grid(scr, plays,player):

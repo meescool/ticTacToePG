@@ -15,6 +15,9 @@ scr = pygame.display.set_mode(a.sizes['scr'])
 
 pygame.display.set_caption('Tic Tac Toe')
 
+myIcon= a.img['grid']
+pygame.display.set_icon(myIcon)
+
 running = True
 
 
@@ -37,7 +40,7 @@ my2 = 0
 
 skins = [a.img['o'],a.img['x']] # store the skins!
 
-player={'skin':skins,'turn':True} # set the players skins and whether it's it's turn
+player={'skin':skins,'turn':True, 'status':0} # set the players skins and whether it's it's turn
 # each index represents a spot on the board
 # 0 = empty
 # 1 = player
