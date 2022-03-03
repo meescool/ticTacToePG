@@ -261,7 +261,24 @@ def game_screen(scr,player,plays,bl,timer,coord,state,subState):
         temp = ''
         return state, subState, timer, player, plays,coord
 
-        
+    if temp == 'help':
+        #plays = [0,0,0,0,0,0,0,0,0]
+        state = 4
+        subState = 0
+        coord['mx'] = 0
+        coord['my'] = 0
+        temp = ''
+        return state, subState, timer, player, plays,coord
+    
+    if temp == 'change skin':
+        #plays = [0,0,0,0,0,0,0,0,0]
+        state = 3
+        subState = 0
+        coord['mx'] = 0
+        coord['my'] = 0
+        temp = ''
+        return state, subState, timer, player, plays,coord
+
     if temp == 'quit' and subState == -1:
         sys.exit()
 
