@@ -39,11 +39,21 @@ def screens(state,scr,bl,timer,coord,player,plays,subState):
         state, subState, timer, player, plays, coord =game_screen(scr,player,plays,bl,timer,coord,state,subState)
         return state, subState, timer, player, plays, coord
     elif(state==3):
-        option = skins_screen(scr, plays, player, coord['mx'], coord['my'], bl)
+        option = skins_screen(scr, plays, player, coord['mx'], coord['my'], bl, subState)
         if(option == 'return'):
             coord['mx'] = 0
             coord['my'] = 0
             state = 1
+        if(option == 'next'):
+            coord['mx'] = 0
+            coord['my'] = 0
+            subState+=1
+            if(subState == 2):
+                subState = 0
+            
+            skins = u.get_skin(subState)
+            player['skin'] = skins
+            
         return state, subState, timer, player, plays, coord
     elif(state==4):
         option = help_screen(scr, plays, player, coord['mx'], coord['my'], bl)
@@ -113,15 +123,31 @@ def main_menu_screen(scr,mx,my,bl):
     return ""
 
 
-def skins_screen(scr, plays, player, mx, my, bl):
+def skins_screen(scr, plays, player, mx, my, bl,substate):
+    skins = [a.img['o'],a.img['x']] # store the skins!
+
     w = a.sizes['scr'][0]/2 - 50
     h = 60
     x = a.sizes['scr'][0]/2 - ((a.sizes['scr'][0]/2 - 50)/2)
     y = (a.sizes['scr'][1])- (h)
 
+    imgx, imgy = u.get_size(a.img['o'])
+
+    area = pygame.Rect((a.sizes['scr'][0]/4),a.sizes['scr'][0]/5,(a.sizes['scr'][0]/4)*(2),(a.sizes['scr'][0]/4)*2)
+    bg = pygame.draw.rect(scr,a.colors['white'],area,0,0,50,50,50,50)
+    # w = a.sizes['scr'][0]/2 - 50
+    # h = 60
+    # x = (bg.width - w)/2
+    # y = bg.height
+
+    scr.blit(skins[substate],((a.sizes['scr'][0]/2)-(imgx/2),(a.sizes['scr'][0]/2)-(imgy)))
+
+
     colors = [a.colors['white'],a.colors['black'],a.colors['white'],a.colors['pink']]
     
     goBack = b.Button(colors,x,y,w,h,'return',0,[0,30,30,0])
+
+    btnNext = b.Button(colors,x,y-h-10,w,h,'next',0,[30,30,30,30])
    
     # surface,
     x= a.sizes['scr'][0]/2
@@ -130,12 +156,14 @@ def skins_screen(scr, plays, player, mx, my, bl):
     text = "this is the screen for choosing skins"
 
     u.write_text(scr,text,a.fonts['text'],a.colors['white'],x,h)
+    btns = [btnNext, goBack]
 
-    btn = goBack
+    for btn in btns:
+        btn.draw(scr)
+        btn.hover(scr,bl)
     
-    goBack.draw(scr)
-    goBack.hover(scr,bl)
-    if(goBack.click(mx,my))==True:
+    for btn in btns:
+        if(btn.click(mx,my))==True:
             return btn.text
     return ""
 

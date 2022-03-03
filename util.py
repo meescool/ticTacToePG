@@ -21,6 +21,14 @@ def get_size(thing):
     h = thing.get_height()
     return w,h
 
+def get_skin(index):
+    options = [a.img['o'],a.img['x']]
+    if(index % 2 == 0):
+        skins = [options[index], options[index+1]]
+    else:
+        skins = [options[index], options[index-1]]
+    return skins
+
 def check_winner(plays, sym):
     '''
     ' This function checks for the winner. I decided to use a hashing algorithm to check for the winners
@@ -146,6 +154,9 @@ def play_grid(plays, player, mx, my, state, time):
 
 
 def draw_grid(scr, plays,player):
+    '''
+    ' This function is for drawing the grid and for placing the marks 
+    '''
     pygame.Surface.fill(scr,a.colors['indigo'])
     # a.img['grid'].set_alpha(0)
     w,h = get_size(a.img['grid'])
