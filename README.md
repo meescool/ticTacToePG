@@ -1,4 +1,8 @@
-# ticTacToePG
+<p align="center">
+<img src=https://raw.githubusercontent.com/meescool/ticTacToePG/main/images/title.png >
+</p>
+
+# TicTacToe PG
 This repo contains a tic tac toe project, made in Python using the Pygame library. It has an aesthetically pleasing GUI, and several screens for better user experience. 
 
 Here is a [video](https://youtu.be/R_QywRO2KHI) of it running!
