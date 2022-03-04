@@ -1,6 +1,8 @@
 # ticTacToePG
 This repo contains a tic tac toe project, made in Python using the Pygame library. It has an aesthetically pleasing GUI, and several screens for better user experience. 
 
+Here is a [video](https://youtu.be/R_QywRO2KHI) of it running!
+
 ## Technologies used
 - Python 3
 - Pygame library
