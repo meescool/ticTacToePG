@@ -43,19 +43,27 @@ def check_winner(plays, sym):
     i = 0
     j = 0
     k = 0
+    # sort out each of the plays into it's respective row, column or diagonal
     for play in plays:
         # print(play)
         if(play == sym):
             col[i] += 1
             row[j] += 1
-            
+            if(k%4 == 0):
+                dia[0]+=1
+                print('left diagonal \\')
+            if(k%2 == 0 and k >= 2 and k <=6 ):
+                dia[1]+=1
+                print('right diagonal /')
+
         i+=1
         if(i == 3):
             j+=1
             i=0
-    # print("")
-    # print(row[0])
-    if ((row[0] == 3 or row[1] == 3 or row[2] == 3) or (col[0] == 3 or col[1] == 3 or col[2] == 3)):
+        k+=1
+
+    # check if any of the rows, columns or diagonals has 3 in a row
+    if ((row[0] == 3 or row[1] == 3 or row[2] == 3) or (col[0] == 3 or col[1] == 3 or col[2] == 3) or dia[0] == 3 or dia[1] == 3):
         return True
 
     return False

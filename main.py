@@ -1,6 +1,6 @@
 '''
 @author Marcela Estrada
-This game is tic tac toe
+This game is tic tac toe with a GUI
 '''
 
 import sys, pygame

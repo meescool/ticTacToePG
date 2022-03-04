@@ -1,14 +1,17 @@
-## Overall plan for the game
+# Overall plan for the game
 
-Screen size : 500 px * 500 px
-Main colors {
-    indigo: rgb(54,46,101),
-    pink: rgb(255,115,115),
-    white: rgb(255,255,255),
-    black: rgb(0,0,0)
-}
+Small plan for getting the game started.
 
+### UI variables
 store these values in a separate module
+
+    Screen size : 500 px * 500 px
+    Main colors {
+        indigo: rgb(54,46,101),
+        pink: rgb(255,115,115),
+        white: rgb(255,255,255),
+        black: rgb(0,0,0)
+    }
 
 ### show game title
     Wait 1 tick
