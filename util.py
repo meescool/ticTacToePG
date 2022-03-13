@@ -22,7 +22,7 @@ def get_size(thing):
     return w,h
 
 def get_skin(index):
-    options = [a.img['o'],a.img['x']]
+    options = [a.img['o'],a.img['x'],a.img['s'], a.img['t']]
     if(index % 2 == 0):
         skins = [options[index], options[index+1]]
     else:

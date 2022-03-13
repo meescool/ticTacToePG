@@ -27,7 +27,9 @@ img={
     'bg':pygame.image.load('images/bg.png'),
     'grid':pygame.image.load('images/grid.png'),
     'o':pygame.image.load('images/o.png'),
-    'x':pygame.image.load('images/x.png')
+    'x':pygame.image.load('images/x.png'),
+    's':pygame.image.load('images/s.png'),
+    't':pygame.image.load('images/t.png')
 
 }
 

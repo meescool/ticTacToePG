@@ -48,7 +48,7 @@ def screens(state,scr,bl,timer,coord,player,plays,subState):
             coord['mx'] = 0
             coord['my'] = 0
             subState+=1
-            if(subState == 2):
+            if(subState == 4):
                 subState = 0
             
             skins = u.get_skin(subState)
@@ -124,7 +124,7 @@ def main_menu_screen(scr,mx,my,bl):
 
 
 def skins_screen(scr, plays, player, mx, my, bl,substate):
-    skins = [a.img['o'],a.img['x']] # store the skins!
+    skins = [a.img['o'],a.img['x'],a.img['s'], a.img['t'] ]# store the skins!
 
     w = a.sizes['scr'][0]/2 - 50
     h = 60
@@ -282,30 +282,10 @@ def game_screen(scr,player,plays,bl,timer,coord,state,subState):
     if temp == 'quit' and subState == -1:
         sys.exit()
 
-    # if(u.check_winner(plays, 1)== True):
-    #     player['turn'] = True
-    #     player['status'] = 1
-    #     plays = [0,0,0,0,0,0,0,0,0]
-    #     state = 5
-
-    # if(u.check_winner(plays, 2)== True):
-    #     player['turn'] = False
-    #     player['status'] = 2
-    #     plays = [0,0,0,0,0,0,0,0,0]
-    #     state = 5
-
-    # playsSet = set(plays)
-    # if 0 not in playsSet:
-    #     player['turn'] = True
-    #     player['status'] = 0
-    #     plays = [0,0,0,0,0,0,0,0,0]
-    #     state = 5
-
     if temp == '':
         w,h = u.get_size(a.img['grid'])
         padx = (a.sizes['scr'][0] - w)/2
         pady = (a.sizes['scr'][0] - h)/2
-        # print(coord['my'] , " is < ", h + pady)
         # player checks that mouse coordinates are in the grid, taking into account the padding of the window
         if (coord['mx'] > padx and coord['mx'] < w+padx) and (coord['my'] > pady and coord['my'] < h + pady):
             plays, player, coord['mx'], coord['my'], state, timer = u.play_grid(plays, player, coord['mx'], coord['my'], state, timer)
@@ -318,11 +298,6 @@ def game_screen(scr,player,plays,bl,timer,coord,state,subState):
     # make a button and change the substate
     # u.draw_menu(scr,bl)
 
-
-    
-    # if grid == True:
-    #     playerTurn()   
-    #     cpuTurn()   
       
             
         
